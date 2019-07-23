@@ -2,15 +2,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookComponent from './BookComponent'
-
-
-/*
-bookstatus is a numirical value to determine book state
-0 = none
-1 = currently read
-2 = want to read
-3 = read
-*/
+//import {Link} from 'react-router-dom'
 class BooksApp extends React.Component {
   constructor(props){
     super(props);
@@ -26,6 +18,7 @@ class BooksApp extends React.Component {
      showSearchPage: false
    }
     this.changeBookStatus= this.changeBookStatus.bind(this);
+    this.searchInputChange=this.searchInputChange.bind(this);
   }
   componentDidMount(){
     BooksAPI.getAll().then((books)=>{
@@ -40,6 +33,16 @@ class BooksApp extends React.Component {
     this.setState({books: newState});
     BooksAPI.update(book,value);
     console.log(this.state.books)
+  }
+  searchInputChange(e){
+    let searchString = e.target.value;
+
+    setTimeout(()=>{
+      BooksAPI.search(searchString).then((books)=>{
+        this.setState({books: books})
+        console.log(books)
+      })
+    }, 5000);
   }
   render() {
     
@@ -57,12 +60,17 @@ class BooksApp extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <input type="text" placeholder="Search by title or author"/>
+                <input 
+                    type="text" 
+                    placeholder="Search by title or author"
+                    defaultValue=""
+                    onChange={this.searchInputChange}/>
 
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid"></ol>
+              <BookComponent books={this.state.books}
+              onChangeStatus = {this.changeBookStatus}/>
             </div>
           </div>
         ) : (

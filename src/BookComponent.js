@@ -22,7 +22,7 @@ class BookComponent extends Component{
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">
                   <ul>
-                  {book.authors.map(author=><li key={author}>{author}</li>)}
+                  {book.authors !=null ? book.authors.map(author=><li key={author}>{author}</li>) : ''}
                   </ul>
                 </div>
               </div>
