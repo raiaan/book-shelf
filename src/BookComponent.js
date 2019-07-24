@@ -1,11 +1,12 @@
 import React , {Component} from 'react';
 import BookShelfChanger from './BookShelfChanger'
 class BookComponent extends Component{
+  
     render(){
         return (
           <div className="bookshelf-books">
           <ol className="books-grid">
-            { this.props.books.map( book =>(<li key={book.title}>
+            {this.props.books.map( book =>(<li key={book.id}>
               <div className="book">
                 <div className="book-top">
                   <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
@@ -31,4 +32,5 @@ class BookComponent extends Component{
         </div>)
     }
 }
+
 export default  BookComponent
