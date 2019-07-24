@@ -33,23 +33,21 @@ class Search extends Component{
   searchInputChange(e){
     let searchString = e.target.value;
 
-    if(searchString !=''){
+    if(searchString !==''){
       setTimeout(()=>{
         BooksAPI.search(searchString).then((books)=>{
           if(!books.error)
-          {this.setState({searchResult: books})
-            console.log(typeof(books))}
+          {books.forEach(function(element) { element.shelf = "none"; });
+            this.setState({searchResult: books})
+            }
         })
       }, 5000);
     }
   }
       changeBookStatus = (book,value)=>{
         book.shelf = value;
-        let newState = this.state.books.filter((item)=>item.title !== book.title);
-        newState.push(book);
-        this.setState({books: newState});
+        console.log(book)
         BooksAPI.update(book,value);
-        console.log(this.state.books)
       }
     render(){
         return (<div className="search-books">
