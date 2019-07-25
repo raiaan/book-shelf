@@ -8,7 +8,7 @@ class BookComponent extends Component{
             {this.props.books.map( book =>(<li key={book.id}>
               <div className="book">
                 <div className="book-top">
-                  <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+                  <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.hasOwnProperty('imageLinks')? book.imageLinks.smallThumbnail:'https://us.bgxme.com/images/no-img.png'})` }}></div>
                   <div className="book-shelf-changer">
                   <select  onChange={(e)=>{this.props.onChangeStatus(book,e.target.value)}} defaultValue={book.shelf}>
                     <option value="move" disabled>Move to...</option>

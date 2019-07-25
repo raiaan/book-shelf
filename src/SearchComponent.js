@@ -8,14 +8,7 @@ class Search extends Component{
     super(props);
     this.state = {
     searchResult : [],
-       
-     /**
-      * TODO: Instead of using this state variable to keep track of which page
-      * we're on, use the URL in the browser's address bar. This will ensure that
-      * users can use the browser's back and forward buttons to navigate between
-      * pages, as well as provide a good URL they can bookmark and share.
-      */
-     showSearchPage: false
+    query:'',
    }
     this.searchInputChange=this.searchInputChange.bind(this);
     this.changeBookStatus= this.changeBookStatus.bind(this);
@@ -32,16 +25,23 @@ class Search extends Component{
   }
   searchInputChange(e){
     let searchString = e.target.value;
-
+    this.setState({query:searchString});
     if(searchString !==''){
       setTimeout(()=>{
         BooksAPI.search(searchString).then((books)=>{
           if(!books.error)
-          {books.forEach(function(element) { element.shelf = "none"; });
-            this.setState({searchResult: books})
+          { 
+            if(this.state.query ===searchString)
+            {
+              books.forEach(function(element) { element.shelf = "none"; });
+              this.setState({searchResult: books})
             }
+          }
         })
       }, 5000);
+    }
+    if(searchString ===''){
+      this.setState({searchResult: []})
     }
   }
       changeBookStatus = (book,value)=>{

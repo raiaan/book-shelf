@@ -17,7 +17,35 @@ body, .app {
   background: #2e7c31;
   text-align: center;
 }
-
+.header-list ,.shelf-header{
+  display: block;
+}
+.shelf-header p{
+  display: inline-block;
+  font-size: 20pt;
+  color: #fff;
+  float: left;
+  margin-left: 10pt
+}
+.shelf-header ul{
+  display: inline-block;
+}
+.shelf-header ul li a:hover{
+ background: #fff;
+ color: #60ac5d
+}.shelf-header ul li a{
+color:#fff;
+}.shelf-header ul li{
+  display: inline-block;
+  list-style: none;
+  margin-left: 5pt;
+}.shelf-header ul li a{
+  display: block;
+  text-decoration: none;
+  font-size: 15pt;
+  font-weight:25pt;
+  padding: 5pt;
+}
 .list-books-title h1 {
   font-weight: 400;
   margin: 0;

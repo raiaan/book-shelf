@@ -27,21 +27,28 @@ class Home extends Component{
     render(){
         return (<div className="list-books">
         <div className="list-books-title">
-          <h1>MyReads</h1>
+          <header className="shelf-header">
+          <p>MyReads</p>
+          <ul>
+            <li><a href='#current'>Currently Reading</a></li>
+            <li><a href='#want'>Want to read</a></li>
+            <li><a href='#read'>read</a></li>
+          </ul>
+        </header>
         </div>
         <div className="list-books-content">
           <div>
-            <div className="bookshelf">
+            <div className="bookshelf" id="current">
               <h2 className="bookshelf-title">Currently Reading</h2>
               <BookComponent books= {this.state.books.filter(book => book.shelf ==='currentlyReading')}
                               onChangeStatus = {this.changeBookStatus}/>
             </div>
-            <div className="bookshelf">
+            <div className="bookshelf" id="want">
               <h2 className="bookshelf-title">Want to Read</h2>
               <BookComponent books= {this.state.books.filter(book => book.shelf ==='wantToRead') }
                               onChangeStatus = {this.changeBookStatus}/>
             </div>
-            <div className="bookshelf">
+            <div className="bookshelf" id='read'>
               <h2 className="bookshelf-title">Read</h2>
               <BookComponent books= {this.state.books.filter(book => book.shelf ==='read') }
                               onChangeStatus = {this.changeBookStatus}/>
