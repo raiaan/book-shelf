@@ -1,29 +1,8 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router-dom'
-import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookComponent from './BookComponent'
 class Home extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-          books : []
-       }
-        this.changeBookStatus= this.changeBookStatus.bind(this);
-      }
-    componentDidMount(){
-        BooksAPI.getAll().then((books)=>{
-          this.setState({books})
-        })
-      }
-      changeBookStatus = (book,value)=>{
-        book.shelf = value;
-        let newState = this.state.books.filter((item)=>item.title !== book.title);
-        newState.push(book);
-        this.setState({books: newState});
-        BooksAPI.update(book,value);
-        console.log(this.state.books)
-      }
     render(){
         return (<div className="list-books">
         <div className="list-books-title">
@@ -40,17 +19,17 @@ class Home extends Component{
           <div>
             <div className="bookshelf" id="current">
               <h2 className="bookshelf-title">Currently Reading</h2>
-              <BookComponent books= {this.state.books.filter(book => book.shelf ==='currentlyReading')}
+              <BookComponent books= {this.props.books.filter(book => book.shelf ==='currentlyReading')}
                               onChangeStatus = {this.changeBookStatus}/>
             </div>
             <div className="bookshelf" id="want">
               <h2 className="bookshelf-title">Want to Read</h2>
-              <BookComponent books= {this.state.books.filter(book => book.shelf ==='wantToRead') }
-                              onChangeStatus = {this.changeBookStatus}/>
+              <BookComponent books= {this.props.books.filter(book => book.shelf ==='wantToRead') }
+                              onChangeStatus = {this.props.changeBookStatus}/>
             </div>
             <div className="bookshelf" id='read'>
               <h2 className="bookshelf-title">Read</h2>
-              <BookComponent books= {this.state.books.filter(book => book.shelf ==='read') }
+              <BookComponent books= {this.props.books.filter(book => book.shelf ==='read') }
                               onChangeStatus = {this.changeBookStatus}/>
             </div>
           </div>

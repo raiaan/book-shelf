@@ -181,6 +181,12 @@ button:active {
 
 .book-authors {
   color: #999;
+}.book-authors li{
+  list-style-type: none;
+  padding: 0px;
+  line-height: 1;
+}.book-authors ul{
+  padding-inline-start:2px;
 }
 
 .book-top {

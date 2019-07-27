@@ -11,17 +11,20 @@ class Search extends Component{
     query:'',
    }
     this.searchInputChange=this.searchInputChange.bind(this);
-    this.changeBookStatus= this.changeBookStatus.bind(this);
+    this.noName = this.noName.bind(this);
 
   } 
-  
-  changeBookStatus = (book,value)=>{
-    book.shelf = value;
-    let newState = this.state.books.filter((item)=>item.title !== book.title);
-    newState.push(book);
-    this.setState({books: newState});
-    BooksAPI.update(book,value);
-    console.log(this.state.books)
+  noName(books) {
+    if(books !==[]){
+      for(let i = 0;i<books.length;i++){
+        let item = this.props.books.find((book)=>book.id === books[i].id);
+        if(item){
+          books[i]=item
+        }else{
+          books[i].shelf='none';
+        }
+      }
+    }
   }
   searchInputChange(e){
     let searchString = e.target.value;
@@ -33,22 +36,18 @@ class Search extends Component{
           { 
             if(this.state.query ===searchString)
             {
-              books.forEach(function(element) { element.shelf = "none"; });
-              this.setState({searchResult: books})
+              this.noName(books);
+              this.setState({searchResult: books});
             }
-          }
+          }else this.setState({searchResult:[]});
         })
       }, 5000);
+      
     }
-    if(searchString ===''){
+    else{
       this.setState({searchResult: []})
     }
   }
-      changeBookStatus = (book,value)=>{
-        book.shelf = value;
-        console.log(book)
-        BooksAPI.update(book,value);
-      }
     render(){
         return (<div className="search-books">
         <div className="search-books-bar">
@@ -65,7 +64,7 @@ class Search extends Component{
         <div className="search-books-results">
           {
             <BookComponent books={this.state.searchResult}
-              onChangeStatus = {this.changeBookStatus}/>  
+              onChangeStatus = {this.props.changeBookStatus}/>  
           }
         </div>
       </div>);
